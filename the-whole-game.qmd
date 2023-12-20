@@ -193,7 +193,7 @@ mlp_brulee_spec <-
 Use Bayes optimizaiton for hyperparameter tuning
 
 ```{r}
-bayes_control <- control_bayes(no_improve = 10L,
+bayes_control <- control_bayes(no_improve = 3L,
                                time_limit = 20,
                                save_pred  = TRUE,
                                verbose    = TRUE)
@@ -212,7 +212,7 @@ workflow_set <-
                    torch = mlp_brulee_spec)
   ) |>
   workflow_map("tune_bayes",
-               iter      = 50L,
+               iter      = 5L,
                resamples = penguin_folds,
                control   = bayes_control
   )
@@ -241,7 +241,7 @@ workflow_set |> autoplot()
 . . .
 
 ```{r}
-best_model_id <- "recipe_glm"
+best_model_id <- "recipe_tree"
 ```
 
 ## Finalize Fit
@@ -284,7 +284,7 @@ final_fit |>
   autoplot()
 ```
 
-## Create Vetiver Model & API {auto-animate="true"}
+## Create Vetiver Model  {auto-animate="true"}
 
 Create a vetiver model from final fit
 
@@ -303,7 +303,7 @@ write_board_manifest(model_board)                                 # <2>
 1.  We need to modify the `plumber.R` file to work with a HuggingFace deployment.
 2.  The manifest is what allows us to use a GitHub repo to store our model board.
 
-## Create Vetiver Model & API {auto-animate="true"}
+## Create Vetiver API {auto-animate="true"}
 
 Use `board_url()` to store our model in a GitHub repo.
 
@@ -312,7 +312,7 @@ Note: For this to work, we first must push our changes to our GitHub repo.
 ```{r}
 #| eval: false
 pin_loc     <- 
-  pins:::github_raw("JamesHWade/r-mlops/main/pins-r/_pins.yaml")
+  pins:::github_raw("Diverchris23/r-mlops/main/pins-r/_pins.yaml")
 model_board <- board_url(pin_loc)
 model_board |>                                                     # <1> 
   vetiver::vetiver_write_plumber("penguins_model")                 # <1>
@@ -341,7 +341,7 @@ if (FALSE) {
     library(workflows)
 }
 b <- board_folder(path = "pins-r")
-v <- vetiver_pin_read(b, "penguins_model", version = "20230730T172358Z-54641")
+v <- vetiver_pin_read(b, "penguins_model", version = "20231220T055258Z-da353")
 
 #* @plumber
 function(pr) {
@@ -370,7 +370,7 @@ if (FALSE) {
   library(stats)
   library(workflows)
 }
-pin_loc <- pins:::github_raw("JamesHWade/r-mlops/main/pins-r/_pins.yaml")
+pin_loc <- pins:::github_raw("Diverchris23/r-mlops/main/pins-r/_pins.yaml")
 b <- board_url(pin_loc)
 v <- vetiver_pin_read(b, "penguins_model")
 
