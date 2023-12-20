@@ -469,8 +469,7 @@ library(bslib)
 library(vetiver)
 
 endpoint <- 
-  vetiver_endpoint("https://jameshwade-penguinrenvs-model.hf.space/predict")
-
+  vetiver_endpoint("https://lopescchristian-penguins.hf.space/predict")
 ui <- bslib::page_sidebar(
   sidebar = sidebar(
     selectInput("species", "Select Species", 
@@ -519,16 +518,16 @@ penguin_train_by_date <-
   rowwise() |>
   mutate(date_obs = Sys.Date() - sample(4:10, 1)) |>
   ungroup() |>
-  arrange(date_obs)
+  arrange(date_obs) 
 
 # compute metrics on training data by date
 original_metrics <-
-  augment(v, penguin_train_by_date) |>
+  augment(endpoint, penguin_train_by_date) |> mutate(.pred_class = .pred_class %>% as_factor()) %>% 
   vetiver_compute_metrics(
     date_var = date_obs,
     period = "day",
-    truth = "sex",
-    estimate = ".pred_class"
+    truth = sex,
+    estimate = .pred_class
   )
 ```
 
@@ -548,13 +547,3 @@ vetiver_plot_metrics(original_metrics) +
   scale_color_manual(values = c(body_color, link_color)) +
   guides(size = guide_legend(override.aes = list(color = body_color)))
 ```
-
-## What could I improve?
-
-<br>
-
-::: incremental
-1.  A less bloated vetiver_renv.lock
-2.  Plumber and Dockerfiles that work out of the box
-3.  Implement model monitoring
-:::
