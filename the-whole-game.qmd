@@ -469,7 +469,7 @@ library(bslib)
 library(vetiver)
 
 endpoint <- 
-  vetiver_endpoint("https://jameshwade-penguins-model.hf.space/predict")
+  vetiver_endpoint("https://jameshwade-penguinrenvs-model.hf.space/predict")
 
 ui <- bslib::page_sidebar(
   sidebar = sidebar(
