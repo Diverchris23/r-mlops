@@ -8,12 +8,12 @@ library(vetiver)
 # Packages needed to generate model predictions
 if (FALSE) {
     library(parsnip)
+    library(ranger)
     library(recipes)
-    library(stats)
     library(workflows)
 }
 b <- board_folder(path = "pins-r")
-v <- vetiver_pin_read(b, "penguins_model", version = "20230730T235625Z-54641")
+v <- vetiver_pin_read(b, "penguins_model", version = "20231220T055258Z-da353")
 
 #* @plumber
 function(pr) {

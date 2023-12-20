@@ -1,0 +1,16 @@
+file: penguins_model.rds
+file_size: 81594
+pin_hash: da35377299633f50
+type: rds
+title: 'penguins_model: a pinned list'
+description: A ranger classification modeling workflow
+tags: ~
+created: 20231220T055258Z
+api_version: 1
+user:
+  required_pkgs:
+  - parsnip
+  - ranger
+  - recipes
+  - workflows
+  renv_lock: ~
